@@ -17,7 +17,6 @@ def user_instruct():
 
     Have fun and enjoy Mystery Word!
 
-
     ''')
 
 
@@ -33,7 +32,7 @@ def pull_words():
 # takes in random word and outputs the number of letters in that word
 def random_word_length(random_word):
     letters_in_word = len(random_word)
-    print("\nYour word contains {} letters".format(letters_in_word))
+    print("\n########## Your word contains {} letters ############".format(letters_in_word))
     return letters_in_word
 
 
@@ -50,58 +49,59 @@ def game(random_word):
     lives_left = 8
 
     while done == False:
-        print(''.join(unders))
-        guess = input("Guess a letter: ")
+        print("\n" + ''.join(unders))
+        guess = input("\nGuess a letter: ")
         guess = guess.lower()
         if len(guess) != 1:
-            print(''.join(unders))
-            print("\nPlease enter only a single letter\n")
+            print("\n" + ''.join(unders))
+            print("\nPlease enter a single letter\n")
         elif guess not in 'abcdefghijklmnopqrstuvwxyz':
-            print(''.join(unders))
+            print("\n" + ''.join(unders))
             print("\n####### Please enter a letter #######\n")
         elif unders == random_list:
-            print(''.join(unders))
+            print("\n" + ''.join(unders))
             print("####### You win! #######")
             done = True
         elif guess in wrong_guesses or guess in correct_guesses:
-            print(''.join(unders))
-            print("\n######## You have already guessed {} please guess again ########".format(guess))
-            print("\nWrong Guesses: {}".format(wrong_guesses) + "\nYou have {} wrong guesses left".format(lives_left))
-            print("Correct Guesses: {}".format(correct_guesses))
+            print("\n" + ''.join(unders))
+            print("\nWrong Guesses: {}".format(' '.join(wrong_guesses.upper())) + "\nYou have {} wrong guesses left".format(lives_left))
+            print("Correct Guesses: {}".format(' '.join(correct_guesses.upper())))
+            print("\n######## You have already guessed {} please guess again ########".format(guess.upper()))
 
         elif guess not in random_word:
             if len(wrong_guesses) >= 8:
-                print(''.join(unders))
+                print("\n" + ''.join(unders))
                 print("######## You ran out of guesses, the word was {}.  Please play again! #######".format(random_word))
                 done = True
             elif guess not in random_word:
                 if guess not in wrong_guesses:
                     wrong_guesses = wrong_guesses + guess
                     lives_left = lives_left - 1
-                print(''.join(unders))
-                print("\nWrong Guesses: {}".format(wrong_guesses) + "\nYou have {} wrong guesses left".format(lives_left))
-                print("Correct Guesses: {}\n".format(correct_guesses))
-                print("######### {} is not in the word #########".format(guess))
+                print("\n" + ''.join(unders))
+                print("\nWrong Guesses: {}".format(' '.join(wrong_guesses.upper())) + "\nYou have {} wrong guesses left".format(lives_left))
+                print("Correct Guesses: {}".format(' '.join(correct_guesses.upper())))
+                print("######### {} is not in the word #########".format(guess.upper()))
         elif guess in random_word:
             correct_guesses = correct_guesses + guess
+
             for x, y in enumerate(random_word):
+                # x is the index in enumerate(random_word) and y is the value in random_word in this case y is a letter
+                # if the variable guess == y then the value in underscore corresponding to the same index value as the
+                # letter in random_word will be replaced with the value in guess
                 if guess == y:
                     unders[x] = y.upper()
-                    print(''.join(unders))
+                    print("\n" + ''.join(unders))
                     if unders == random_list:
                         print(''.join(unders))
                         print("You win!")
                         done = True
 
-            print("\nWrong Guesses: {}".format(wrong_guesses) + "\nYou have {} wrong guesses left".format(lives_left))
-            print("Correct Guesses: {}\n".format(correct_guesses))
+            print("\nWrong Guesses: {}".format(' '.join(wrong_guesses.upper())) + "\nYou have {} wrong guesses left".format(lives_left))
+            print("Correct Guesses: {}".format(' '.join(correct_guesses.upper())))
             print("\n ####### Good job! {} is a correct letter #########".format(guess.upper()))
 
 
-# put random_word into a list of single letter strings
-# use indexes to display the guessed letters in the
-# proper order and "_" for the letters that haven't been
-# guessed yet
+
 
 def main():
     user_instruct()
